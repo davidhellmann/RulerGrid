@@ -1,23 +1,22 @@
-// RulerGrid Fredmansky Edition - https://github.com/davidhellmann/RulerGrid
-// By Ryan Langlois - ryanfromottawa.com / forked by fredmansky
-// Easily create ruler-based grids in Sketch
+// Fredmansky Grid
 
 var grid_width = [[doc askForUserInput:"Wie breit soll das Grid sein?" initialValue:"1440"] integerValue]
 var column_count = [[doc askForUserInput:"Wie viele Spalten soll das Grid haben?" initialValue:"12"] integerValue]
-var gutter_width = [[doc askForUserInput:"Wie breit soll das Gutter sein?" initialValue:"20"] integerValue]
+var gutter_width = [[doc askForUserInput:"Wie breit soll das Gutter sein?" initialValue:"32"] integerValue]
 var current_artboard = [[doc currentPage] currentArtboard] || [doc currentPage]
 
-if (grid_width != 0 && column_count != 0 && current_artboard != null) { // make sure we don't divide by 0 and break the universe
-	var horizontal_rulers = [current_artboard horizontalRulerData] // get horizontal rulers (the ones that go from top to bottom... that's confusing)
-	var gutter_count = column_count + 1; // there is always one more gutter than columns because of outer margins
-	var space_for_columns = grid_width - (gutter_count * gutter_width) // find available space in grid after subtracting the space that gutters use
-	var column_width = space_for_columns / column_count // divide available space by the column_count to get the column_width
+if (grid_width != 0 && column_count != 0 && current_artboard != null) {
 
-	var frame_center = [[current_artboard frame] width] / 2 // find center of artboard
-	var start_grid_at = frame_center - (grid_width / 2) // start at center of the artboard, then subtract half of the grid_width
-  var end_grid_at = frame_center + (grid_width / 2) // End Position of the Grid
+	var horizontal_rulers = [current_artboard horizontalRulerData]
+	var gutter_count = column_count + 1;
+	var space_for_columns = grid_width - (gutter_count * gutter_width)
+	var column_width = Math.round(space_for_columns / column_count)
+	var frame_center = [[current_artboard frame] width] / 2
+	var start_grid_at = frame_center - (grid_width / 2)
+  var end_grid_at = frame_center + (grid_width / 2)
+	var half_gutter = gutter_width - (gutter_width / 2)
 
-	var ruler_count = (column_count * 2) + 2 // every column has two rulers, plus 2 extra total for outer margins
+	var ruler_count = (column_count * 2) + 2
 	for (var i=0; i < [ruler_count]; i++){
 	  [horizontal_rulers addGuideWithValue:start_grid_at]
 	  if ((i % 2) == 0) { // even number
@@ -27,6 +26,6 @@ if (grid_width != 0 && column_count != 0 && current_artboard != null) { // make 
 	  }
 	}
 
-  [horizontal_rulers addGuideWithValue:start_grid_at -= (gutter_width / 2)]
-  [horizontal_rulers addGuideWithValue:start_grid_end += (gutter_width / 2)]
+  // [horizontal_rulers addGuideWithValue:start_grid_at -= (gutter_width / 2)]
+  // [horizontal_rulers addGuideWithValue:start_grid_at -= half_gutter]
 }
