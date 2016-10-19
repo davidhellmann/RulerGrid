@@ -28,7 +28,7 @@ if (grid_width != 0 && column_count != 0 && current_artboard != null) { // make 
 	  }
 	}
   
-  [horizontal_rulers addGuideWithValue:start_grid_at -= (gutter_width / 2)]
+  [horizontal_rulers addGuideWithValue:start_grid_at - (gutter_width / 2)]
   [horizontal_rulers addGuideWithValue:start_grid_end += (gutter_width / 2)]
   
 }
